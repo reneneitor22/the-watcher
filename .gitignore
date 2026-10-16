@@ -1,0 +1,12 @@
+node_modules/
+sesion/
+.wwebjs_cache/
+media/
+datos/
+*.sqlite
+*.sqlite-*
+*.log
+.env
+navio-clave.txt
+navio-enviados.json
+grupos.json

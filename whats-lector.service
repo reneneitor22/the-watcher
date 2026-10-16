@@ -1,0 +1,20 @@
+# Vigilante de WhatsApp en el servidor Linux (en la Mac es launchd: supervisor.sh).
+#   cp whats-lector.service /etc/systemd/system/ && systemctl enable --now whats-lector
+#   journalctl -u whats-lector -f        ← el log en vivo
+# Restart=always: también relanza las salidas limpias (sesión perdida → avisa por Telegram
+# antes de salir; mientras no se vuelva a vincular, reintenta cada minuto sin hacer daño).
+[Unit]
+Description=whats-lector (vigilante WhatsApp → Navío)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=vigilante
+WorkingDirectory=/home/vigilante/whats-lector
+Environment=CHROME=/usr/bin/google-chrome
+ExecStart=/usr/bin/node escuchar.js --historial 200
+Restart=always
+RestartSec=60
+
+[Install]
+WantedBy=multi-user.target

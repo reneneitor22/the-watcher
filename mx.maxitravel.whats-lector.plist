@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Supervisor de escuchar.js. Se instala con:  ./supervisor.sh instalar
+  - Arranca al iniciar sesión en la Mac (RunAtLoad).
+  - Si escuchar.js se cae con error, launchd lo levanta otra vez (máx. 1 vez por minuto).
+  - Si sale limpio (Ctrl+C / sesión perdida → exit 0) NO lo reinicia.
+  - Cada arranque baja --historial 200 para tapar el hueco de cuando estuvo caído
+    (los repetidos se ignoran solos).
+  OJO: la ruta de node es la de nvm. Si cambias de versión de node, reinstala.
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>mx.maxitravel.whats-lector</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>__NODE__</string>
+    <string>escuchar.js</string>
+    <string>--historial</string>
+    <string>200</string>
+  </array>
+  <key>WorkingDirectory</key><string>__DIR__</string>
+  <key>RunAtLoad</key><true/>
+  <key>KeepAlive</key>
+  <dict><key>SuccessfulExit</key><false/></dict>
+  <key>ThrottleInterval</key><integer>60</integer>
+  <key>StandardOutPath</key><string>__DIR__/escuchar.log</string>
+  <key>StandardErrorPath</key><string>__DIR__/escuchar.log</string>
+</dict>
+</plist>
